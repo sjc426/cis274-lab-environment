@@ -1,0 +1,30 @@
+# Packer cache — never commit (multi-GB ISO caches)
+packer_cache/
+**/packer_cache/
+
+# Build outputs — OVAs are too large for GitHub
+builds/
+*.ova
+*.ovf
+*.vmdk
+*.vdi
+
+# Packer logs
+*-packer.log
+
+# Seed ISOs (generated locally)
+iso/*.iso
+
+# Temp build dirs
+*-tmp/
+
+# Screenshots from builds
+*.png
+
+# VirtualBox installer
+*.exe
+
+# Secrets / vars files
+*.pkrvars.hcl
+secrets.hcl
+.env
