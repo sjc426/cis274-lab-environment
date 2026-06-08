@@ -1,0 +1,37 @@
+#cloud-config
+autoinstall:
+  version: 1
+  interactive-sections: []
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  identity:
+    hostname: agent-router
+    username: student
+    password: "$6$CIS274salt$M9jhBPwB1eI/AgEeIg3UPYXj9HsOwi9U9gQYlndV14IBXHIpLNpzk2R/5In5RokTUgLPKp19xc/ySlyGSoNXR0"
+  ssh:
+    install-server: yes
+    allow-pw: yes
+  network:
+    version: 2
+    ethernets:
+      enp0s3:
+        dhcp4: no
+        addresses: [192.168.56.30/24]
+      enp0s8:
+        dhcp4: yes
+  storage:
+    layout:
+      name: direct
+  packages:
+    - openssh-server
+    - curl
+    - wget
+    - git
+    - python3
+    - python3-pip
+    - python3-venv
+  late-commands:
+    - echo 'student ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/student
+    - chmod 440 /target/etc/sudoers.d/student
+    - curtin in-target --target=/target -- sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
